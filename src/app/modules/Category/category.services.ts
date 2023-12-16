@@ -6,7 +6,12 @@ const createCategoryIntoDB = async (payload:TCategory)=>{
     return result;
 }
 
+const getAllCategorysFromDB =async()=>{
+    const result = await Category.find();
+    return result;
+}
 
 export const CategoryService = {
-    createCategoryIntoDB
+    createCategoryIntoDB,
+    getAllCategorysFromDB
 }
