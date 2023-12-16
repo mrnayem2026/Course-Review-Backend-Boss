@@ -13,12 +13,10 @@ const courseDetailsSchema = z.object({
 });
 
 // Below  Zod schema for the courseSchema
-export const courseSchemaValidation = z.object({
+export const CreateCourseSchemaValidation = z.object({
   title: z
     .string()
     .trim()
-    .min(1)
-    .max(255)
     .refine((data) => !!data, { message: 'Title is required.' }),
   instructor: z
     .string()
@@ -49,4 +47,9 @@ export const courseSchemaValidation = z.object({
 function isValidDate(dateString: string): boolean {
   const regex = /^\d{4}-\d{2}-\d{2}$/;
   return regex.test(dateString);
+}
+
+
+export const CourseValidation  = {
+    CreateCourseSchemaValidation
 }

@@ -43,14 +43,13 @@ const courseSchema = new Schema<TCourse>({
   },
   categoryId: {
     type: Schema.Types.ObjectId,
-    unique: true,
     ref: 'Category',
     required: [true, 'Category ID is required.'],
   },
   price: {
     type: Number,
   },
-  tags: courseTagsSchema,
+  tags: [courseTagsSchema],
   startDate: {
     type: String,
     validate: {
@@ -71,6 +70,9 @@ const courseSchema = new Schema<TCourse>({
     type: String,
     trim:true,
     required: [true, 'Language is required.'],
+  },
+  durationInWeeks: {
+    type:Number,
   },
   provider: {
     type: String,

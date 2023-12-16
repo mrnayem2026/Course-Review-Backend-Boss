@@ -23,3 +23,8 @@ export type TCourse = {
   durationInWeeks?: number;
   details: TCourseDetails;
 };
+
+export type TDateRange = {
+    startDate: string;
+    endDate: string;
+  }
