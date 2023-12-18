@@ -87,11 +87,12 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
   if (tags && tags.length > 0) {
     const deletedTags = tags
       .filter((tag) => tag.name && tag.isDeleted)
-      .map((del) => del.name);
-    console.log({ tags });
-    console.log({ deletedTags });
+      .map((tagName) => tagName.name);
 
-    const updateTagInfo = await Course.findByIdAndUpdate(
+    const insertTags = tags.filter((tag) => tag.name && !tag.isDeleted);
+    console.log({ insertTags });
+
+    const updateAndDeleteTagInfo = await Course.findByIdAndUpdate(
       id,
       {
         $pull: { tags: { name: { $in: deletedTags } } },
@@ -102,8 +103,27 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
       },
     );
 
-    if (!updateTagInfo) {
-      throw new Error('Update  tag  hoi nai!');
+    if (!updateAndDeleteTagInfo) {
+      throw new Error(
+        '😟 Unable to perform update: Tag information is missing or invalid.!',
+      );
+    }
+
+    const updateAndInsertTagInfo = await Course.findByIdAndUpdate(
+      id,
+      {
+        $addToSet : { tags: { $each: insertTags } },
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!updateAndInsertTagInfo) {
+      throw new Error(
+        '😟 Unable to perform update: Tag information is missing or invalid.!',
+      );
     }
   }
 

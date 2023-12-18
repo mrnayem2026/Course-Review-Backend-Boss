@@ -11,6 +11,8 @@ const courseTagsSchema = new Schema<TTag>({
     type: Boolean,
     default:false
   },
+},{
+  _id:false
 });
 
 const courseDetailsSchema = new Schema<TCourseDetails>({
