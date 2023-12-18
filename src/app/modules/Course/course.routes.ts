@@ -5,7 +5,8 @@ import { Router } from "express";
 import { CourseControllers } from "./course.controllers";
 
 const router = Router();
-
+// TODO: Zod validation korte hobe 
 router.post('/',CourseControllers.createCourseIntoDB)
+router.get('/',CourseControllers.getAllCoursesFromDB)
 
 export const CourseRouter = router;

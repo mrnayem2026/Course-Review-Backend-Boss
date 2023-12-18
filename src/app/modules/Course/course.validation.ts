@@ -13,7 +13,7 @@ const courseDetailsSchema = z.object({
 });
 
 // Below  Zod schema for the courseSchema
-export const CreateCourseSchemaValidation = z.object({
+const CreateCourseSchemaValidation = z.object({
   title: z
     .string()
     .trim()

@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
+// import BuildQuery from '../../QueryFunction/QueryFunction';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
 
@@ -20,11 +21,10 @@ const createCourseIntoDB = async (payload: TCourse) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    // const isEndDateMonthGreater  = end.getMonth() > start.getMonth();
     const isEndDateMonthGreater: boolean = end.getMonth() > start.getMonth();
-    
+
     if (!isEndDateMonthGreater) {
-      throw new Error('End monthe tik vade deo hoi nai!');
+      throw new Error('Your start month is less then end month.');
     }
 
     const millisecondsInWeek: number = 7 * 24 * 60 * 60 * 1000;
@@ -41,6 +41,36 @@ const createCourseIntoDB = async (payload: TCourse) => {
   return result;
 };
 
+const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
+  let searchTerm = '';
+
+  if (query?.provider) {
+    searchTerm = query?.provider as string;
+  }
+// TODO:QUERY KORA HOI NAI 
+  const result = await Course.find({
+    $or: [
+      'searchTerm',
+      'sort',
+      'limit',
+      'page',
+      'fields',
+      'minPrice',
+      'maxPrice',
+      'startDate',
+      'endDate',
+      'language',
+      'provider',
+      'level',
+    ].map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
+
+  return result;
+};
+
 export const CourseService = {
   createCourseIntoDB,
+  getAllCoursesFromDB,
 };

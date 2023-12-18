@@ -4,7 +4,7 @@ type TResponse<T> = {
     success:boolean,
     statusCode:number,
     message?:string,
-    meta?:T,
+    meta?:Record<string, unknown>,
     data:T
 }
 
