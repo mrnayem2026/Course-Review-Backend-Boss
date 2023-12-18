@@ -47,7 +47,7 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
   if (query?.provider) {
     searchTerm = query?.provider as string;
   }
-// TODO:QUERY KORA HOI NAI 
+  // TODO:QUERY KORA HOI NAI
   const result = await Course.find({
     $or: [
       'searchTerm',
@@ -70,7 +70,50 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
+const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
+  const id = courseId;
+  const { tags, ...data } = payload;
+  // const data = payload;
+
+  const updateBasicInfo = await Course.findByIdAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updateBasicInfo) {
+    throw new Error('Update  hoi nai!');
+  }
+
+  if (tags && tags.length > 0) {
+    const deletedTags = tags
+      .filter((tag) => tag.name && tag.isDeleted)
+      .map((del) => del.name);
+    console.log({ tags });
+    console.log({ deletedTags });
+
+    const updateTagInfo = await Course.findByIdAndUpdate(
+      id,
+      {
+        $pull: { tags: { name: { $in: deletedTags } } },
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!updateTagInfo) {
+      throw new Error('Update  tag  hoi nai!');
+    }
+  }
+
+  const result = await Course.findById(id);
+
+  return result;
+};
+
 export const CourseService = {
   createCourseIntoDB,
   getAllCoursesFromDB,
+  updateCoursesIntoDB,
 };

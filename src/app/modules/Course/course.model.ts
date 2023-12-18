@@ -17,7 +17,6 @@ const courseDetailsSchema = new Schema<TCourseDetails>({
   level: {
     type: String,
     enum: ['Beginner', 'Intermediate', 'Advanced'],
-    required: [true, 'Level is required.'],
   },
   description: {
     type: String,
