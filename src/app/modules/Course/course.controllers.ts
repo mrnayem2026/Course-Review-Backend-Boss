@@ -41,7 +41,7 @@ const updateCoursesIntoDB = catchAsyncFunction(
   async (req: Request, res: Response) => {
     const { courseId } = req.params;
     const payload = req.body;
-    
+
     const result = await CourseService.updateCoursesIntoDB(courseId, payload);
 
     sendResponse(res, {

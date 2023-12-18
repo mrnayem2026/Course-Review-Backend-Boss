@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-// import BuildQuery from '../../QueryFunction/QueryFunction';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
 
@@ -72,8 +71,9 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
 
 const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
   const id = courseId;
-  const { tags, ...data } = payload;
-  // const data = payload;
+  const { details, tags, ...data } = payload;
+
+  const modifiedUpdateData: Record<string, unknown> = { ...data };
 
   const updateBasicInfo = await Course.findByIdAndUpdate(id, data, {
     new: true,
@@ -81,16 +81,37 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
   });
 
   if (!updateBasicInfo) {
-    throw new Error('Update  hoi nai!');
+    throw new Error('😟 Unable to perform update');
   }
 
+  // Handle nod-primitive data update
+
+  if (details && Object.keys(details)) {
+    for (const [key, value] of Object.entries(details)) {
+      modifiedUpdateData[`details.${key}`] = value;
+    }
+  }
+
+  const updateDetailsInfo = await Course.findByIdAndUpdate(
+    id,
+    modifiedUpdateData,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!updateDetailsInfo) {
+    throw new Error('😟 Unable to perform update');
+  }
+
+  // Check if there are tags provided and if the array has elements. then delete some unnecesary tag. than insert some needed tag
   if (tags && tags.length > 0) {
     const deletedTags = tags
       .filter((tag) => tag.name && tag.isDeleted)
       .map((tagName) => tagName.name);
 
     const insertTags = tags.filter((tag) => tag.name && !tag.isDeleted);
-    console.log({ insertTags });
 
     const updateAndDeleteTagInfo = await Course.findByIdAndUpdate(
       id,
@@ -112,7 +133,7 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
     const updateAndInsertTagInfo = await Course.findByIdAndUpdate(
       id,
       {
-        $addToSet : { tags: { $each: insertTags } },
+        $addToSet: { tags: { $each: insertTags } },
       },
       {
         new: true,

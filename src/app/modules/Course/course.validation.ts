@@ -30,11 +30,9 @@ const CreateCourseSchemaValidation = z.object({
     startDate: z.string().refine((data) => isValidDate(data), {
       message: 'Start Date is required. and must be  "YYYY-MM-DD" formate.',
     }),
-    endDate: z
-      .string()
-      .refine((data) => isValidDate(data), {
-        message: 'End Date is required. and must be  "YYYY-MM-DD" formate.',
-      }),
+    endDate: z.string().refine((data) => isValidDate(data), {
+      message: 'End Date is required. and must be  "YYYY-MM-DD" formate.',
+    }),
     language: z
       .string()
       .trim()
@@ -66,35 +64,43 @@ const UpdateeCourseSchemaValidation = z.object({
     title: z
       .string()
       .trim()
-      .refine((data) => !!data, { message: 'Title is required.' }).optional(),
+      .refine((data) => !!data, { message: 'Title is required.' })
+      .optional(),
     instructor: z
       .string()
-      .refine((data) => !!data, { message: 'Instructor is required.' }).optional(),
+      .refine((data) => !!data, { message: 'Instructor is required.' })
+      .optional(),
     categoryId: z
       .string()
-      .refine((data) => !!data, { message: 'Category ID is required.' }).optional(),
+      .refine((data) => !!data, { message: 'Category ID is required.' })
+      .optional(),
     price: z.number().optional().optional(),
     tags: updateTagSchema,
-    startDate: z.string().refine((data) => isValidDate(data), {
-      message: 'Start Date is required. and must be  "YYYY-MM-DD" formate.',
-    }).optional(),
+    startDate: z
+      .string()
+      .refine((data) => isValidDate(data), {
+        message: 'Start Date is required. and must be  "YYYY-MM-DD" formate.',
+      })
+      .optional(),
     endDate: z
       .string()
       .refine((data) => isValidDate(data), {
         message: 'End Date is required. and must be  "YYYY-MM-DD" formate.',
-      }).optional(),
+      })
+      .optional(),
     language: z
       .string()
       .trim()
-      .refine((data) => !!data, { message: 'Language is required.' }).optional(),
+      .refine((data) => !!data, { message: 'Language is required.' })
+      .optional(),
     provider: z
       .string()
       .trim()
-      .refine((data) => !!data, { message: 'Provider is required.' }).optional(),
+      .refine((data) => !!data, { message: 'Provider is required.' })
+      .optional(),
     details: updateCourseDetailsSchema,
   }),
 });
-
 
 // Helper function to check if a string is a valid date
 function isValidDate(dateString: string): boolean {

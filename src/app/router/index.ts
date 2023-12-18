@@ -3,7 +3,6 @@ import { CategoryRouter } from '../modules/Category/category.routes';
 import { CourseRouter } from '../modules/Course/course.routes';
 import { ReviewRouter } from '../modules/Review/review.routes';
 
-
 const router = Router();
 
 const moduleRoutes = [

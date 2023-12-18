@@ -15,5 +15,4 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello Nayem! I am from Courses review');
 });
 
-
 export default app;

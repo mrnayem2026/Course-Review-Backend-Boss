@@ -25,6 +25,6 @@ export type TCourse = {
 };
 
 export type TDateRange = {
-    startDate: string;
-    endDate: string;
-  }
+  startDate: string;
+  endDate: string;
+};

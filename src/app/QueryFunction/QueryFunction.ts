@@ -22,7 +22,7 @@ function BuildQuery<T extends Document>(
   const queryObj = { ...query }; // copy
 
   // Filtering
- const excludeFields = [
+  const excludeFields = [
     'searchTerm',
     'sort',
     'limit',

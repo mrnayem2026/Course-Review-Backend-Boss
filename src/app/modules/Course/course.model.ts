@@ -1,19 +1,22 @@
 import { Schema, model } from 'mongoose';
 import { TCourse, TCourseDetails, TTag } from './course.interface';
 
-const courseTagsSchema = new Schema<TTag>({
-  name: {
-    type: String,
-    trim: true,
-    required: [true, 'Tag name is required'],
+const courseTagsSchema = new Schema<TTag>(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: [true, 'Tag name is required'],
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
-  isDeleted: {
-    type: Boolean,
-    default:false
+  {
+    _id: false,
   },
-},{
-  _id:false
-});
+);
 
 const courseDetailsSchema = new Schema<TCourseDetails>({
   level: {
@@ -27,9 +30,9 @@ const courseDetailsSchema = new Schema<TCourseDetails>({
 
 // Helper function to check if a string is a valid date
 const isValidDate = (dateString: string): boolean => {
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    return regex.test(dateString);
-  };
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  return regex.test(dateString);
+};
 
 const courseSchema = new Schema<TCourse>({
   title: {
@@ -69,19 +72,18 @@ const courseSchema = new Schema<TCourse>({
   },
   language: {
     type: String,
-    trim:true,
+    trim: true,
     required: [true, 'Language is required.'],
   },
   durationInWeeks: {
-    type:Number,
+    type: Number,
   },
   provider: {
     type: String,
-    trim:true,
+    trim: true,
     required: [true, 'Provider is required.'],
   },
   details: courseDetailsSchema,
 });
-
 
 export const Course = model<TCourse>('Course', courseSchema);
