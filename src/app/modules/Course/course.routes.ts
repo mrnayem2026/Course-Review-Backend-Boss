@@ -10,5 +10,6 @@ router.post('/', CourseControllers.createCourseIntoDB);
 router.get('/', CourseControllers.getAllCoursesFromDB);
 router.put('/:courseId', CourseControllers.updateCoursesIntoDB);
 router.get('/:courseId/reviews', CourseControllers.getCoursesReviewsFromDB);
+router.get('/best', CourseControllers.getBestCoursesByReviewsFromDB);
 
 export const CourseRouter = router;

@@ -66,9 +66,21 @@ const getCoursesReviewsFromDB = catchAsyncFunction(
     });
   },
 );
+
+const getBestCoursesByReviewsFromDB = catchAsyncFunction(async(req:Request,res:Response)=>{
+  const result = await CourseService.getBestCoursesByReviewsFromDB();
+
+  sendResponse(res,{
+    success:true,
+    statusCode:httpStatus.OK,
+    message:"Best course retrieved successfully",
+    data:result
+  })
+})
 export const CourseControllers = {
   createCourseIntoDB,
   getAllCoursesFromDB,
   updateCoursesIntoDB,
   getCoursesReviewsFromDB,
+  getBestCoursesByReviewsFromDB
 };

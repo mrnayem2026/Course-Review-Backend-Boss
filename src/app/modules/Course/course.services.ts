@@ -2,6 +2,7 @@
 import mongoose from 'mongoose';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
+import { Review } from '../Review/review.model';
 
 const createCourseIntoDB = async (payload: TCourse) => {
   const startDate = payload.startDate;
@@ -174,9 +175,54 @@ const getCoursesReviewsFromDB = async (courseId: string) => {
   return result;
 };
 
+const getBestCoursesByReviewsFromDB = async () => {
+  const result = await Review.aggregate([
+    {
+      $group: {
+        _id: '$courseId',
+        reviewCount: { $sum: 1 },
+        averageRating: { $avg: '$rating' },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        courseId: '$_id',
+        averageRating: { $round: ['$averageRating', 1] },
+        reviewCount: '$reviewCount',
+      },
+    },
+    {
+      $lookup: {
+        from: 'courses',
+        localField: 'courseId',
+        foreignField: '_id',
+        as: 'course',
+      },
+    },
+    {
+      $project: {
+        courseId: 0,
+      },
+    },
+    {
+      $unwind: '$course',
+    },
+    {
+      $sort: { averageRating: -1 },
+    },
+    {
+      $limit: 1,
+    },
+  ]);
+
+  return result;
+};
+
 export const CourseService = {
   createCourseIntoDB,
   getAllCoursesFromDB,
   updateCoursesIntoDB,
   getCoursesReviewsFromDB,
+  getBestCoursesByReviewsFromDB
 };
