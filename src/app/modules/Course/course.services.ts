@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import mongoose from 'mongoose';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
 
@@ -153,8 +153,30 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
   return result;
 };
 
+const getCoursesReviewsFromDB = async (courseId: string) => {
+  const result = await Course.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(courseId),
+      },
+    },
+
+    {
+      $lookup: {
+        from: 'reviews',
+        localField: '_id',
+        foreignField: 'courseId',
+        as: 'reviews',
+      },
+    },
+  ]);
+
+  return result;
+};
+
 export const CourseService = {
   createCourseIntoDB,
   getAllCoursesFromDB,
   updateCoursesIntoDB,
+  getCoursesReviewsFromDB,
 };

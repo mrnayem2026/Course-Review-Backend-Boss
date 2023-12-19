@@ -52,9 +52,23 @@ const updateCoursesIntoDB = catchAsyncFunction(
     });
   },
 );
+const getCoursesReviewsFromDB = catchAsyncFunction(
+  async (req: Request, res: Response) => {
+    const { courseId } = req.params;
 
+    const result = await CourseService.getCoursesReviewsFromDB(courseId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Course and Reviews retrieved successfully',
+      data: result,
+    });
+  },
+);
 export const CourseControllers = {
   createCourseIntoDB,
   getAllCoursesFromDB,
   updateCoursesIntoDB,
+  getCoursesReviewsFromDB,
 };
