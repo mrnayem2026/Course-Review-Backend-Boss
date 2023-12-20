@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
 import { Review } from '../Review/review.model';
+import AppError from '../../error/AppError';
+import httpStatus from 'http-status';
 
 const createCourseIntoDB = async (payload: TCourse) => {
   const startDate = payload.startDate;
@@ -24,7 +26,10 @@ const createCourseIntoDB = async (payload: TCourse) => {
     const isEndDateMonthGreater: boolean = end.getMonth() > start.getMonth();
 
     if (!isEndDateMonthGreater) {
-      throw new Error('Your start month is less then end month.');
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Your start month is less then end month.',
+      );
     }
 
     const millisecondsInWeek: number = 7 * 24 * 60 * 60 * 1000;
@@ -82,7 +87,7 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
   });
 
   if (!updateBasicInfo) {
-    throw new Error('😟 Unable to perform update');
+    throw new AppError(httpStatus.BAD_REQUEST, '😟 Unable to perform update');
   }
 
   // Handle nod-primitive data update
@@ -103,7 +108,10 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
   );
 
   if (!updateDetailsInfo) {
-    throw new Error('😟 Unable to perform update');
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      '😟 Unable to perform update for details info',
+    );
   }
 
   // Check if there are tags provided and if the array has elements. then delete some unnecesary tag. than insert some needed tag
@@ -126,7 +134,8 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
     );
 
     if (!updateAndDeleteTagInfo) {
-      throw new Error(
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
         '😟 Unable to perform update: Tag information is missing or invalid.!',
       );
     }
@@ -143,7 +152,8 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
     );
 
     if (!updateAndInsertTagInfo) {
-      throw new Error(
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
         '😟 Unable to perform update: Tag information is missing or invalid.!',
       );
     }
@@ -169,7 +179,6 @@ const getCoursesReviewsFromDB = async (courseId: string) => {
         as: 'reviews',
       },
     },
-    
   ]);
 
   return result;

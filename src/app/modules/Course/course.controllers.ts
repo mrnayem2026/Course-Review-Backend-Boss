@@ -63,7 +63,7 @@ const getCoursesReviewsFromDB = catchAsyncFunction(
       statusCode: httpStatus.OK,
       message: 'Course and Reviews retrieved successfully',
       data: {
-        course:course,
+        course: course,
       },
     });
   },

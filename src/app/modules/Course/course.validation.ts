@@ -26,7 +26,7 @@ const CreateCourseSchemaValidation = z.object({
       .string()
       .refine((data) => !!data, { message: 'Category ID is required.' }),
     price: z.number().optional(),
-    tags: tagSchema,
+    tags: z.array(tagSchema),
     startDate: z.string().refine((data) => isValidDate(data), {
       message: 'Start Date is required. and must be  "YYYY-MM-DD" formate.',
     }),
@@ -74,8 +74,8 @@ const UpdateeCourseSchemaValidation = z.object({
       .string()
       .refine((data) => !!data, { message: 'Category ID is required.' })
       .optional(),
-    price: z.number().optional().optional(),
-    tags: updateTagSchema,
+    price: z.number().optional(),
+    tags: z.array(updateTagSchema).optional(),
     startDate: z
       .string()
       .refine((data) => isValidDate(data), {
@@ -98,7 +98,7 @@ const UpdateeCourseSchemaValidation = z.object({
       .trim()
       .refine((data) => !!data, { message: 'Provider is required.' })
       .optional(),
-    details: updateCourseDetailsSchema,
+    details: updateCourseDetailsSchema.optional(),
   }),
 });
 

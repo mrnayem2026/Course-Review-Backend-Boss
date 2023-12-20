@@ -5,8 +5,8 @@ import httpStatus from 'http-status';
 const apiNotFound = (req: Request, res: Response, next: NextFunction) => {
   return res.status(httpStatus.NOT_FOUND).json({
     success: false,
-    message: '4️⃣0️⃣4️⃣ API Not Found !! 😔',
-    error: '',
+    message: `4️⃣0️⃣4️⃣ THIS ${req.originalUrl} API Not Found !! 😔 `,
+    error: req.originalUrl,
   });
 };
 
