@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ZodError } from 'zod';
 import handlerZodError from '../errors/handlerZodError';
 import config from '../config';
+import handleDuplicateError from '../errors/handleDuplicateError';
 
 const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,6 +18,12 @@ const globalErrorHandler = (
 
   if (err instanceof ZodError) {
     const simplifiedError = handlerZodError(err);
+    message = simplifiedError?.message;
+    errorMessage = simplifiedError?.errorMessage;
+    statusCode = simplifiedError?.statusCode;
+  }else if (err?.code === 11000)
+  {
+    const simplifiedError = handleDuplicateError(err);
     message = simplifiedError?.message;
     errorMessage = simplifiedError?.errorMessage;
     statusCode = simplifiedError?.statusCode;
