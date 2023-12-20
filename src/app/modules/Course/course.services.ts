@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { TCourse } from './course.interface';
 import { Course } from './course.model';
 import { Review } from '../Review/review.model';
-import AppError from '../../error/AppError';
+import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 
 const createCourseIntoDB = async (payload: TCourse) => {
@@ -28,7 +28,7 @@ const createCourseIntoDB = async (payload: TCourse) => {
     if (!isEndDateMonthGreater) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
-        'Your start month is less then end month.',
+        'Your start month is less then end month. ☹️',
       );
     }
 
