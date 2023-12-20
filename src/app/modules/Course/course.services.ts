@@ -161,7 +161,6 @@ const getCoursesReviewsFromDB = async (courseId: string) => {
         _id: new mongoose.Types.ObjectId(courseId),
       },
     },
-
     {
       $lookup: {
         from: 'reviews',
@@ -170,6 +169,7 @@ const getCoursesReviewsFromDB = async (courseId: string) => {
         as: 'reviews',
       },
     },
+    
   ]);
 
   return result;
@@ -224,5 +224,5 @@ export const CourseService = {
   getAllCoursesFromDB,
   updateCoursesIntoDB,
   getCoursesReviewsFromDB,
-  getBestCoursesByReviewsFromDB
+  getBestCoursesByReviewsFromDB,
 };
