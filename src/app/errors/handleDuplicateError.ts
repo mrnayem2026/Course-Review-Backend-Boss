@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {  TErrorResponse } from "../interface/error";
-
+import { TErrorResponse } from '../interface/error';
 
 const handleDuplicateError = (err: any): TErrorResponse => {
   // Extract value within double quotes using regex
@@ -16,9 +15,6 @@ const handleDuplicateError = (err: any): TErrorResponse => {
       message: `${extractedMessage} is already exists`,
     },
   ];
-
- 
-
 
   return {
     statusCode: 400,

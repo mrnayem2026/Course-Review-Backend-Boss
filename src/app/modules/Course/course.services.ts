@@ -5,6 +5,8 @@ import { Course } from './course.model';
 import { Review } from '../Review/review.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import { TQuery } from '../../QueryFunction/TQuery';
+import getAllQuery from '../../QueryFunction/getAllQuery';
 
 const createCourseIntoDB = async (payload: TCourse) => {
   const startDate = payload.startDate;
@@ -46,32 +48,8 @@ const createCourseIntoDB = async (payload: TCourse) => {
   return result;
 };
 
-const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
-  let searchTerm = '';
-
-  if (query?.provider) {
-    searchTerm = query?.provider as string;
-  }
-  // TODO:QUERY KORA HOI NAI
-  const result = await Course.find({
-    $or: [
-      'searchTerm',
-      'sort',
-      'limit',
-      'page',
-      'fields',
-      'minPrice',
-      'maxPrice',
-      'startDate',
-      'endDate',
-      'language',
-      'provider',
-      'level',
-    ].map((field) => ({
-      [field]: { $regex: searchTerm, $options: 'i' },
-    })),
-  });
-
+const getAllCoursesFromDB = async (query: TQuery) => {
+  const result = await getAllQuery(Course.find(), query);
   return result;
 };
 

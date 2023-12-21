@@ -1,6 +1,5 @@
-import { TErrorIssue, TErrorResponse } from "../interface/error"
-import AppError from "./AppError"
-
+import { TErrorIssue, TErrorResponse } from '../interface/error';
+import AppError from './AppError';
 
 const handleAppError = (err: AppError): TErrorResponse => {
   const issues: TErrorIssue[] = [
@@ -8,14 +7,14 @@ const handleAppError = (err: AppError): TErrorResponse => {
       path: '',
       message: err.message,
     },
-  ]
+  ];
 
   return {
     statusCode: 400,
     errorMessage: issues[0].message,
     errorDetails: issues,
     message: 'App Error',
-  }
-}
+  };
+};
 
-export default handleAppError
+export default handleAppError;

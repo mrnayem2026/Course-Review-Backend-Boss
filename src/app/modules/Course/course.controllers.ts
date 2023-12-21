@@ -21,7 +21,6 @@ const createCourseIntoDB = catchAsyncFunction(
 const getAllCoursesFromDB = catchAsyncFunction(
   async (req: Request, res: Response) => {
     const result = await CourseService.getAllCoursesFromDB(req.query);
-    console.log(req.query);
 
     sendResponse(res, {
       success: true,

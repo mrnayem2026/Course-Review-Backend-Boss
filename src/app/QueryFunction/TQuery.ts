@@ -1,4 +1,5 @@
 export type TQuery = {
+  [key: string]: unknown;
   page?: number;
   limit?: number;
   sortBy?: string;
