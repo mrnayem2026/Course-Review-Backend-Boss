@@ -12,6 +12,7 @@
 - [Dependencies](#Dependencies)
 - [Dev Dependencies](#DevDependencies)
 - [Course review diagram](#Coursereviewdiagram)
+- [Course Review API Documentation](#CourseReviewAPI Documentation)
 
 ## Prerequisites
 
@@ -22,9 +23,9 @@ Ensure you have the following installed on your system:
 ## Description
 
 Course Review is a insightful backend application designed to smooth
-the management and optimization of online E-Education platforms. 
-This application intuitive tools for creating and updating 
-courses seamlessly. 
+the management and optimization of online E-Education platforms.
+This application intuitive tools for creating and updating
+courses seamlessly.
 
 Feel free to explore the live site and experience the various functionalities offered by the below link.
 
@@ -115,3 +116,148 @@ The project uses the following dev dependencies:
 ## Course review diagram
 
 ![Screenshot](/img/course%20review%20diagram.png)
+
+# Course Review API Documentation
+
+## 1. Create a Course
+
+**Method:** `POST`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/course`
+
+**Request Body:**
+
+```json
+{
+  "title": "Sample Course",
+  "instructor": "Jane Doe",
+  "categoryId": "123456789012345678901234",
+  "price": 49.99,
+  "tags": [
+    {
+      "name": "Programming",
+      "isDeleted": false
+    },
+    {
+      "name": "Web Development",
+      "isDeleted": false
+    }
+  ],
+  "startDate": "2023-01-15",
+  "endDate": "2023-03-14",
+  "language": "English",
+  "provider": "Tech Academy",
+  "details": {
+    "level": "Intermediate",
+    "description": "Detailed description of the course"
+  }
+}
+```
+
+## 2. Get All Courses
+
+**Method:** `GET`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/courses`
+
+**Query Parameters:**
+
+- `page` (optional)
+- `limit` (optional)
+- `sortBy` (optional)
+- `sortOrder` (optional)
+- `minPrice` (optional)
+- `maxPrice` (optional)
+- `tags` (optional)
+- `startDate` (optional)
+- `endDate` (optional)
+- `language` (optional)
+- `provider` (optional)
+- `durationInWeeks` (optional)
+- `level` (optional)
+
+## 3. Create a Category
+
+**Method:** `POST`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/categories`
+
+**Request Body:**
+
+```json
+{
+  "name": "SaaS"
+}
+```
+
+## 4. Get All Categories
+
+**Method:** `GET`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/categories`
+
+## 5. Create a Review
+
+**Method:** `POST`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/reviews`
+
+**Request Body:**
+
+```json
+{
+    "courseId": "658406fca3cb2b7854290175",
+    "rating": 5,
+    "review": "Great course!"
+}
+```
+
+## 6. Update a Course (Partial Update with Dynamic Update)
+
+**Method:** `PUT`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/courses/:courseId`
+
+**Request Body:** (Include only the fields to be updated)
+
+```json
+{
+    "title": "Updated Title",
+    "instructor": "New Instructor",
+    "categoryId": "658406fca3cb2b7854290175",
+    "price": 59.99,
+    "tags": [
+        {
+            "name": "Programming",
+            "isDeleted": true
+        },
+        {
+            "name": "Web Development",
+            "isDeleted": false
+        }
+    ],
+    "startDate": "2023-02-01",
+    "endDate":"2023-03-14",
+    "language": "Spanish",
+    "provider": "Code Masters",
+    "durationInWeeks": 6,
+    "details": {
+        "level": "Intermediate",
+        "description": "Detailed description of the course"
+    }
+}
+```
+
+## 7. Get Course by ID with Reviews
+
+**Method:** `GET`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/courses/:courseId/reviews`
+
+## 8. Get the Best Course Based on Average Review (Rating)
+
+**Method:** `GET`
+
+**Endpoint:** `https://course-review-neon.vercel.app/api/course/best`
+
+Feel free to reach out for any clarification or additional information.
