@@ -16,7 +16,7 @@ categorySchema.pre('save', async function (next) {
   });
 
   if (isCategoryNameExist) {
-    throw new AppError(400,'This category name is allready exist');
+    throw new AppError(400, 'This category name is allready exist');
   }
   next();
 });

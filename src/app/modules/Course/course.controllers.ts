@@ -22,14 +22,47 @@ const getAllCoursesFromDB = catchAsyncFunction(
   async (req: Request, res: Response) => {
     const result = await CourseService.getAllCoursesFromDB(req.query);
 
+    const page = req.query.page;
+    const limit = req.query.limit;
+    const sortBy = req.query.sortBy;
+    const sortOrder = req.query.sortOrder;
+    const minPrice = req.query.minPrice;
+    const maxPrice = req.query.maxPrice;
+    const tags = req.query.tags;
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    const language = req.query.language;
+    const provider = req.query.provider;
+    const durationInWeeks = req.query.durationInWeeks;
+    const level = req.query.level;
+
+    let total = 0;
+    if (
+      page ||
+      limit ||
+      sortBy ||
+      sortOrder ||
+      minPrice ||
+      maxPrice ||
+      tags ||
+      startDate ||
+      endDate ||
+      language ||
+      provider ||
+      durationInWeeks ||
+      level
+    ) {
+      total = Object.values(result).length;
+    }
+
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
       message: 'Courses retrieved successfully',
       meta: {
-        page: 0,
-        limit: 0,
-        total: 0,
+        page: Number(page) || 0,
+        limit: Number(limit) || 0,
+        total: total || 0,
       },
       data: result,
     });
