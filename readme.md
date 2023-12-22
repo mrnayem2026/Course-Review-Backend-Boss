@@ -4,13 +4,13 @@
 
 - [Prerequisites](#Prerequisites)
 - [Description](#Description)
+- [Live Site](#LiveSite)
 - [Installation](#Installation)
 - [Environment Configuration](#EnvironmentConfiguration)
 - [Running the Application](#RunningtheApplication)
 - [Scripts](#Scripts)
 - [Dependencies](#Dependencies)
 - [Dev Dependencies](#DevDependencies)
-- [Live Site](#LiveSite)
 - [Course review diagram](#Coursereviewdiagram)
 
 ## Prerequisites
@@ -24,9 +24,13 @@ Ensure you have the following installed on your system:
 Course Review is a insightful backend application designed to smooth
 the management and optimization of online E-Education platforms. 
 This application intuitive tools for creating and updating 
-courses seamlessly. Here are the key highlights:
+courses seamlessly. 
 
 Feel free to explore the live site and experience the various functionalities offered by the below link.
+
+## Live Site
+
+You can access the live version of the website at [Course Review](https://course-review-neon.vercel.app/).
 
 ## Installation
 
@@ -107,10 +111,6 @@ The project uses the following dev dependencies:
 - [prettier](https://www.npmjs.com/package/prettier) v3.1.0
 - [ts-node-dev](https://www.npmjs.com/package/ts-node-dev) v2.0.0
 - [typescript](https://www.npmjs.com/package/typescript) v5.3.2
-
-## Live Site
-
-You can access the live version of the website at [Course Review](https://candid-salamander-8f1e3a.netlify.app/).
 
 ## Course review diagram
 

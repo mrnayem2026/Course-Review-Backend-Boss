@@ -7,6 +7,7 @@ import handleDuplicateError from '../errors/handleDuplicateError';
 import handleCastError from '../errors/handleCastError';
 import AppError from '../errors/AppError';
 import handleAppError from '../errors/handleAppError';
+import handleValidationError from '../errors/handleValidationError';
 
 const globalErrorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,6 +27,11 @@ const globalErrorHandler = (
     statusCode = simplifiedError?.statusCode;
   } else if (err?.code === 11000) {
     const simplifiedError = handleDuplicateError(err);
+    message = simplifiedError?.message;
+    errorMessage = simplifiedError?.errorMessage;
+    statusCode = simplifiedError?.statusCode;
+  } else if (err?.name === 'ValidationError') {
+    const simplifiedError = handleValidationError(err);
     message = simplifiedError?.message;
     errorMessage = simplifiedError?.errorMessage;
     statusCode = simplifiedError?.statusCode;

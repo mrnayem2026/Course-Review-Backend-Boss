@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { TCategory } from './category.interface';
+import AppError from '../../errors/AppError';
 
 const categorySchema = new Schema<TCategory>({
   name: {
@@ -15,7 +16,7 @@ categorySchema.pre('save', async function (next) {
   });
 
   if (isCategoryNameExist) {
-    throw new Error('This category name is allready exist');
+    throw new AppError(400,'This category name is allready exist');
   }
   next();
 });
