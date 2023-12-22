@@ -12,7 +12,7 @@
 - [Dependencies](#Dependencies)
 - [Dev Dependencies](#DevDependencies)
 - [Course review diagram](#Coursereviewdiagram)
-- [Course Review API Documentation](#CourseReviewAPI Documentation)
+- [Course Review API Documentation](#CourseReviewAPIDocumentation)
 
 ## Prerequisites
 
