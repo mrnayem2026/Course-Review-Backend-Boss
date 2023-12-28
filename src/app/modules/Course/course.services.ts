@@ -14,7 +14,7 @@ const createCourseIntoDB = async (payload: TCourse) => {
 
   /**
    * Calculate the duration in weeks between two dates and ensure the end month is greater than the start month.
-   *
+   * COURESE_REVIEW
    * @param startDate - The start date in the format 'YYYY-MM-DD'.
    * @param endDate - The end date in the format 'YYYY-MM-DD'.
    * @returns The duration in weeks between the start and end dates, rounded up to the nearest integer.
