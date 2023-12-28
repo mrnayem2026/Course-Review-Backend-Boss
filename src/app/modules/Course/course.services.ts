@@ -25,12 +25,12 @@ const createCourseIntoDB = async (payload: TCourse) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    const isEndDateMonthGreater: boolean = end.getMonth() > start.getMonth();
+    const isEndDateMonthGreater: boolean =start <= end  ; // strat: 2023-03-15 <=  end: 2023-03-16
 
     if (!isEndDateMonthGreater) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
-        'Your start month is less then end month. ☹️',
+        'Your EndDate is less then StartDate month. ☹️',
       );
     }
 
@@ -65,10 +65,10 @@ const updateCoursesIntoDB = async (courseId: string, payload: TCourse) => {
   });
 
   if (!updateBasicInfo) {
-    throw new AppError(httpStatus.BAD_REQUEST, '😟 Unable to perform update');
+    throw new AppError(httpStatus.BAD_REQUEST, '😟 Unable to perform update for basic info');
   }
 
-  // Handle nod-primitive data update
+  // Handle non-primitive data update
 
   if (details && Object.keys(details)) {
     for (const [key, value] of Object.entries(details)) {
